@@ -1,12 +1,9 @@
 import {
-    getUpcomingMovies, getGenres
+    getUpcomingMovies, getGenres, getNowPlayingMovies, getPopularMovies
   } from '../tmdb.js';
 import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
 import express from 'express';
-import {
-    getNowPlayingMovies, getPopularMovies, getMovieDetails
-  } from '../tmdb-api';
 
 
 const router = express.Router();
