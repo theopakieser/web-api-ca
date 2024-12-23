@@ -16,19 +16,22 @@ A bullet-point list of the ADDITIONAL features you have implemented in the API *
 [ Outline any non-standard setup steps necessary to run your app locally after cloning the repo.]
 
 ## API Configuration
+.env in react-movies
+---------------------------------
+REACT_APP_TMDB_KEY=
+FAST_REFRESH=false
+REACT_APP_BACKEND_URL=http://localhost:3001/api/movies
+---------------------------------
 
-Describe any configuration that needs to take place before running the API. For example, creating an `.env` file and what variables to put in it. Give an example of how this might be done.
-
-REMEMBER: DON'T PUT YOUR OWN USERNAMES/PASSWORDS/AUTH KEYS IN THE README OR ON GITHUB, just placeholders as indicated below:
-
-______________________
-NODEENV=development
-PORT=8080
-HOST=
-mongoDB=YourMongoURL
-seedDb=true
-secret=YourJWTSecret
-______________________
+.env in movies-api
+---------------------------------
+NODE_ENV=development
+PORT=3001
+HOST=localhost
+MONGO_DB=
+TMDB_KEY=
+SECRET=
+------------------------------------
 
 ## API Design
 Give an overview of your web API design, perhaps similar to the following: 
@@ -50,4 +53,7 @@ Describe how you integrated your React app with the API. List the views that use
 
 ## Independent learning (if relevant)
 
-Briefly explain any non-standard features developed for the app.   
+Briefly explain any non-standard features developed for the app. 
+
+## References
+https://clerk.com/blog/building-a-react-login-page-template
