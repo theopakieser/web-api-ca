@@ -43,17 +43,17 @@ router.post('/register', asyncHandler(async (req, res) => {
 //authenticate/login user
 router.post('/login', asyncHandler(async (req, res) => {
     const { username, password } = req.body;
-    console.log('Incoming login request:', { username, password });
+//    console.log('Incoming login request:', { username, password });
 
     const user = await User.findByUserName(username);
     if (!user) {
         return res.status(401).json({ success: false, msg: 'Authentication failed. User not found.' });
     }
 
-    console.log('Stored hashed password:', user.password);
+  //  console.log('Stored hashed password:', user.password);
 
     const isMatch = await user.comparePassword(password);
-    console.log('Password match result:', isMatch);
+   // console.log('Password match result:', isMatch);
 
     if (isMatch) {
         const token = jwt.sign({ username: user.username }, process.env.SECRET, { expiresIn: '1h' });
