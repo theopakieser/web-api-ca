@@ -3,6 +3,7 @@ import User from './userModel';
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 
+
 const router = express.Router(); // eslint-disable-line
 
 // Get all users
@@ -12,21 +13,37 @@ router.get('/', async (req, res) => {
 });
 
 // register(Create)/Authenticate User
-router.post('/', asyncHandler(async (req, res) => {
-    try {
-        if (!req.body.username || !req.body.password) {
-            return res.status(400).json({ success: false, msg: 'Username and password are required.' });
-        }
-        if (req.query.action === 'register') {
-            await registerUser(req, res);
-        } else {
-            await authenticateUser(req, res);
-        }
-    } catch (error) {
-        // Log the error and return a generic error message
-        console.error(error);
-        res.status(500).json({ success: false, msg: 'Internal server error.' });
+// router.post('/', asyncHandler(async (req, res) => {
+//     try {
+//         if (!req.body.username || !req.body.password) {
+//             return res.status(400).json({ success: false, msg: 'Username and password are required.' });
+//         }
+//         if (req.query.action === 'register') {
+//             await registerUser(req, res);
+//         } else {
+//             await authenticateUser(req, res);
+//         }
+//     } catch (error) {
+//         // Log the error and return a generic error message
+//         console.error(error);
+//         res.status(500).json({ success: false, msg: 'Internal server error.' });
+//     }
+// }));
+
+//actually sign up user
+router.post('/register', asyncHandler(async (req, res) => {
+    const {username, password} = req.body;
+    if(!username || !password){
+        return res.status(400).json({sucess: false, msg: "Username and password required"});
     }
+
+try{
+    const token = await authenticateUser(req.body);
+    res.status(200).json({success: true, msg: 'Login Scucessful', token})
+} catch (error){
+    console.error(error);
+    res.status(401).json({success: false, msg: 'Invalid username or password'})
+}
 }));
 
 // Update a user
@@ -62,5 +79,6 @@ async function authenticateUser(req, res) {
         res.status(401).json({ success: false, msg: 'Wrong password.' });
     }
 }
+
 
 export default router;
