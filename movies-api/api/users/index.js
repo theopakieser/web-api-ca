@@ -38,7 +38,7 @@ router.post('/register', asyncHandler(async (req, res) => {
     }
 
 try{
-    const token = await authenticateUser(req.body);
+    const token = await registerUser(req.body);
     res.status(200).json({success: true, msg: 'Login Scucessful', token})
 } catch (error){
     console.error(error);
@@ -60,8 +60,15 @@ router.put('/:id', async (req, res) => {
 });
 
 async function registerUser(req, res) {
-    // Add input validation logic here
-    await User.create(req.body);
+    const { username, password} = req.body;
+    const existingUser = await User.findOne({username});
+    if (existingUser){
+        throw new Error('User already exists');
+    }else{
+        const hashedPassword = await bcrypt.hash(password, 5);
+        const newUser = new User({username, password: hashedPassword})
+        await newUser.save();
+    }
     res.status(201).json({ success: true, msg: 'User successfully created.' });
 }
 
