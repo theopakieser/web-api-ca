@@ -21,6 +21,7 @@ const SiteHeader = ({ history }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
   const menuOptions = [
@@ -30,8 +31,15 @@ const SiteHeader = ({ history }) => {
     { label: "Must Watch", path: "/movies/mustWatch" },
     { label: "Now Playing", path: "/movies/now_playing" },
     { label: "Popular Movies", path: "/movies/popular_movies" },
-    
+    { label: "Login", path: "/login"},
+    { label: "Sign Up", path: "/signup"},
+    { label: "Profile", path: "/profile", authRequired: true  },
   ];
+
+  const LoginOptions = context.isAuthenticated
+    ? menuOptions.filter((opt) => opt.authRequired !== false)
+    : menuOptions.filter((opt) => opt.authRequired !== true);
+
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
@@ -77,7 +85,7 @@ const SiteHeader = ({ history }) => {
                   open={open}
                   onClose={() => setAnchorEl(null)}
                 >
-                  {menuOptions.map((opt) => (
+                  {LoginOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
                       onClick={() => handleMenuSelect(opt.path)}
@@ -89,7 +97,7 @@ const SiteHeader = ({ history }) => {
               </>
             ) : (
               <>
-                {menuOptions.map((opt) => (
+                {LoginOptions.map((opt) => (
                   <Button
                     key={opt.label}
                     color="inherit"
