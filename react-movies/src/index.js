@@ -17,7 +17,9 @@ import PopularMoviesPage from "./pages/popularMoviesPage";
 import RegisterPage from "./pages/registerPage";
 import LoginPage from "./pages/loginPage";
 import ProfilePage from "./pages/profilePage";
-
+import ProtectedRoutes from "./protectedRoutes";
+import MoviesContextProvider from "./contexts/moviesContext";
+import AuthContextProvider from "./contexts/authenticationContext";
 
 
 const queryClient = new QueryClient({
@@ -34,6 +36,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+      <AuthContextProvider>
         <SiteHeader />
         <MoviesContextProvider>
           <Routes>
@@ -42,16 +45,19 @@ const App = () => {
             <Route path="/movies/:id" element={<MoviePage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={ <Navigate to="/" /> } />
-            <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />           
             <Route path="/movies/upcoming" element={ <UpcomingMoviesPage /> } />
-            <Route path="/movies/mustWatch" element={ <MustWatchPage /> } />
             <Route path="/movies/now_playing" element={<NowPlayingMoviesPage/>} />
             <Route path="/movies/popular_movies" element={<PopularMoviesPage/>} />
+            <Route element={<ProtectedRoutes />}>
+            <Route path="/movies/mustWatch" element={ <MustWatchPage /> } />
+            <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />           
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={ <RegisterPage/> } />
             <Route path="/profile" element={<ProfilePage />} />
+            </Route>
           </Routes>
         </MoviesContextProvider>
+        </AuthContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
