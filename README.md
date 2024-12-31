@@ -69,6 +69,3 @@ Authentication: Added login and signup forms to manage user sessions
 ## Independent learning (if relevant)
 
 Briefly explain any non-standard features developed for the app. 
-
-## References
-https://clerk.com/blog/building-a-react-login-page-template
