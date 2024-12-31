@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext  } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -16,26 +16,30 @@ import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import { MoviesContext } from "../../contexts/moviesContext";
 
-export default function MovieCard({movie, action}) {
+export default function MovieCard({ movie, action }) {
   const { favorites, addToFavorites } = useContext(MoviesContext);
-  const { mustWatch, addToMustWatch } = useContext(MoviesContext);
+  const {mustWatchs, addToWatchList} = useContext(MoviesContext);
+
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
   } else {
     movie.favorite = false
   }
-  if (mustWatch.find((id) => id === movie.id)) {
+
+  if(mustWatchs.find(((id) => id === movie.id))){
     movie.mustWatch = true;
   } else {
     movie.mustWatch = false
   }
+
   const handleAddToFavorite = (e) => {
     e.preventDefault();
     addToFavorites(movie);
   };
+
   return (
     <Card>
- <CardHeader
+      <CardHeader
         avatar={
           movie.favorite ? (
             <Avatar sx={{ backgroundColor: 'red' }}>
@@ -48,7 +52,8 @@ export default function MovieCard({movie, action}) {
             {movie.title}{" "}
           </Typography>
         }
-      />      <CardMedia
+      />
+      <CardMedia
         sx={{ height: 500 }}
         image={
           movie.poster_path

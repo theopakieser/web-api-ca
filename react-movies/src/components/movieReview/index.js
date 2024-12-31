@@ -1,22 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import { useQuery } from "react-query";
-import Spinner from '../spinner'
-const MovieReview =  ({ review }) => {
-  const { data , error, isLoading, isError } = useQuery(
-    ["reviews", { id: movie.id }],
-    getMovieReviews
-  );
-  
-  if (isLoading) {
-    return <Spinner />;
-  }
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
-  
-  const reviews = data.results;
+const MovieReview =  ({ review }) => {
   return (
     <>
       <Typography variant="h5" component="h3">

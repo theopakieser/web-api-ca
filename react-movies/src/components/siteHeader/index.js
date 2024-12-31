@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { AuthContext } from "../../contexts/authContext";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -24,22 +25,22 @@ const SiteHeader = ({ history }) => {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const menuOptions = [
+  const allMenuOptions = [
     { label: "Home", path: "/" },
-    { label: "Favorites", path: "/movies/favorites" },
-    { label: "Upcoming Movies", path: "/movies/upcoming" },
-    { label: "Must Watch", path: "/movies/mustWatch" },
+    { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Now Playing", path: "/movies/now_playing" },
-    { label: "Popular Movies", path: "/movies/popular_movies" },
+    { label: "Popular", path: "/movies/popular" },
+    { label: "Favorites", path: "/movies/favorites", authRequired: true  },
+    { label: "Watch List", path: "/movies/mustWatch", authRequired: true  },
     { label: "Login", path: "/login"},
     { label: "Sign Up", path: "/signup"},
     { label: "Profile", path: "/profile", authRequired: true  },
+    
   ];
 
-  const LoginOptions = context.isAuthenticated
-    ? menuOptions.filter((opt) => opt.authRequired !== false)
-    : menuOptions.filter((opt) => opt.authRequired !== true);
-
+  const menuOptions = context.isAuthenticated
+    ? allMenuOptions.filter((opt) => opt.authRequired !== false)
+    : allMenuOptions.filter((opt) => opt.authRequired !== true);
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
@@ -53,12 +54,25 @@ const SiteHeader = ({ history }) => {
     <>
       <AppBar position="fixed" color="secondary">
         <Toolbar>
+        {context.isAuthenticated ? (
+          <>
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
-            TMDB Client
+            Welcome, {context.userName}!
           </Typography>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             All you ever wanted to know about Movies!
           </Typography>
+          </>
+           ) : (
+            <>
+              <Typography variant="h4" sx={{ flexGrow: 1 }}>
+                TMDB Client
+              </Typography>
+              <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                All you ever wanted to know about Movies!
+              </Typography>
+            </>
+           )}
             {isMobile ? (
               <>
                 <IconButton
@@ -85,7 +99,7 @@ const SiteHeader = ({ history }) => {
                   open={open}
                   onClose={() => setAnchorEl(null)}
                 >
-                  {LoginOptions.map((opt) => (
+                  {menuOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
                       onClick={() => handleMenuSelect(opt.path)}
@@ -97,7 +111,7 @@ const SiteHeader = ({ history }) => {
               </>
             ) : (
               <>
-                {LoginOptions.map((opt) => (
+                {menuOptions.map((opt) => (
                   <Button
                     key={opt.label}
                     color="inherit"

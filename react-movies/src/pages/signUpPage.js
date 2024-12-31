@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from '../contexts/authContext';
 
-const RegisterPage = props => {
+const SignUpPage = props => {
   const context = useContext(AuthContext)
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +25,7 @@ const RegisterPage = props => {
 
   return (
     <>
-      <h2>Register</h2>
+      <h2>SignUp page</h2>
       <p>You must register a username and password to log in </p>
       <input value={userName} placeholder="user name" onChange={e => {
         setUserName(e.target.value);
@@ -42,4 +42,4 @@ const RegisterPage = props => {
   );
 };
 
-export default RegisterPage;
+export default SignUpPage;

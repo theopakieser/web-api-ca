@@ -2,10 +2,9 @@ import React from "react";
 import { useParams } from 'react-router-dom';
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
-//import useMovie from "../hooks/useMovies";
+import { getMovie } from '../api/tmdb-api'
 import { useQuery } from "react-query";
-import Spinner from '../components/spinner';
-import { getMovie } from '../api/tmdb-api';
+import Spinner from '../components/spinner'
 
 const MoviePage = (props) => {
   const { id } = useParams();
@@ -21,6 +20,7 @@ const MoviePage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
+
   return (
     <>
       {movie ? (

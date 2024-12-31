@@ -1,7 +1,7 @@
 import express from 'express';
 import User from './userModel';
 import jwt from 'jsonwebtoken';
-import asyncHandler from 'express-async-handler' 
+import asyncHandler from 'express-async-handler' //to fix error: at Object.<anonymous> (C:\Users\adamt\Downloads\web-api-ca\web-api-ca\movies-api\api\users\/index.js:17:8)
 
 const router = express.Router(); // eslint-disable-line
 

@@ -1,9 +1,9 @@
 import React from "react";
-import { getPopularMovies } from "../api/tmdb-api";
+import { getPopularMovies } from "../api/movies-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-import AddToWatchListIcon from "../components/cardIcons/addToWatch";
+import AddToWatchListIcon from "../components/cardIcons/addToWatchList";
 
 const PopularMoviesPage = (props) => {
 
@@ -25,7 +25,7 @@ const PopularMoviesPage = (props) => {
 
   return (
     <PageTemplate
-      title="Popular Movies"
+      title="Our most Popular Movies"
       movies={movies}
       action={(movie) => {
         return <AddToWatchListIcon movie={movie} />
